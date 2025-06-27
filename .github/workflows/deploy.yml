@@ -24,7 +24,7 @@ jobs:
         ssh ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
           set -e
           if [ ! -d app ]; then
-            git clone https://github.com/HorkruXoN/projekt-studia.git app
+            git clone git@github.com:HorkruXoN/projekt-studia.git app
           fi
           cd app
           git pull
