@@ -16,7 +16,7 @@ def get_db_connection(retries=5, delay=3):
             )
             return conn
         except mysql.connector.Error as e:
-            print(f"Database connection failed (attempt {i+1}/{retries}): {e}")
+            print(f"Database connection  failed (attempt {i+1}/{retries}): {e}")
             time.sleep(delay)
     return None
 
