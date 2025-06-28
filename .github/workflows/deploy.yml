@@ -28,6 +28,18 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v3
 
+    - name: Wait for MySQL to be ready
+      run: |
+        for i in {1..30}; do
+          mysqladmin ping -h 127.0.0.1 -u user -ppassword && break
+          echo "Waiting for MySQL..."
+          sleep 2
+        done
+
+    - name: Initialize DB
+      run: |
+        mysql -h 127.0.0.1 -u user -ppassword projekt < mysql-init/init.sql
+
     - name: Setup SSH key
       run: |
         mkdir -p ~/.ssh
