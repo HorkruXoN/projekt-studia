@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Projekt Flask + MySQL</title>
+    <title>Lista użytkowników</title>
 </head>
 <body>
-    <h1>Połączenie z bazą danych</h1>
-    <p>Pobrane tabele:</p>
+    <h1>Użytkownicy projektu:</h1>
     <ul>
-      {% for table in tables %}
-        <li>{{ table }}</li>
-      {% endfor %}
+        {% for user in users %}
+            <li>{{ user.name }} ({{ user.email }})</li>
+        {% else %}
+            <li>Brak użytkowników lub błąd połączenia.</li>
+        {% endfor %}
     </ul>
 </body>
 </html>

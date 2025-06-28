@@ -1,42 +1,36 @@
 from flask import Flask, render_template
-import os
 import mysql.connector
-from mysql.connector import Error
+import os
 
 app = Flask(__name__)
 
 def get_db_connection():
     try:
-        connection = mysql.connector.connect(
-            host=os.getenv('MYSQL_HOST', 'localhost'),
-            user=os.getenv('MYSQL_USER', 'root'),
-            password=os.getenv('MYSQL_PASSWORD', 'example'),
-            database=os.getenv('MYSQL_DATABASE', 'projekt')
+        conn = mysql.connector.connect(
+            host=os.environ.get("DB_HOST", "localhost"),
+            user=os.environ.get("DB_USER", "root"),
+            password=os.environ.get("DB_PASSWORD", ""),
+            database=os.environ.get("DB_NAME", "")
         )
-        return connection
-    except Error as e:
-        print("Database connection failed:", e)
+        return conn
+    except mysql.connector.Error as e:
+        print(f"Database connection failed: {e}")
         return None
 
-@app.route("/")
-def hello():
-    connection = get_db_connection()
-    data = []
-    if connection:
+@app.route('/')
+def home():
+    conn = get_db_connection()
+    users = []
+    if conn:
         try:
-            cursor = connection.cursor()
-            cursor.execute("SHOW TABLES;")
-            tables = cursor.fetchall()
-            data = [t[0] for t in tables]
-        except Error as e:
-            data = [f"Błąd zapytania: {e}"]
+            cursor = conn.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM users")
+            users = cursor.fetchall()
+        except Exception as e:
+            print(f"Query failed: {e}")
         finally:
-            cursor.close()
-            connection.close()
-    else:
-        data = ["Brak połączenia z bazą danych"]
+            conn.close()
+    return render_template("index.html", users=users)
 
-    return render_template("index.html", tables=data)
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
