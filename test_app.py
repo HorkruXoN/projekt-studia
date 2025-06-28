@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-load_dotenv()  # załaduje zmienne z .env do os.environ
+load_dotenv()  # to załaduje zmienne z .env do os.environ
 
 import pytest
 from app import app
