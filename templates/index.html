@@ -1,14 +1,15 @@
-<!doctype html>
-<html lang="pl">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>Projekt na studia</title>
+    <title>Projekt Flask + MySQL</title>
 </head>
 <body>
-  <h1>Projekt na studia</h1>
-  <p>Homelab działa!</p>
-  <p>Projekt wykonali:</p>
-  <ol><li>Filip Dorsch</li><li>Łukasz Rohde</li><li>Oliwier Wesołowski</li></ol>
-  
+    <h1>Połączenie z bazą danych</h1>
+    <p>Pobrane tabele:</p>
+    <ul>
+      {% for table in tables %}
+        <li>{{ table }}</li>
+      {% endfor %}
+    </ul>
 </body>
 </html>

@@ -1,6 +1,27 @@
-version: '3'
+version: '3.8'
+
 services:
   web:
     build: .
     ports:
-      - "80:5000"
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=example
+      - MYSQL_DATABASE=projekt
+    restart: always
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: projekt
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
