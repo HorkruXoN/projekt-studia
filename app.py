@@ -2,7 +2,7 @@ from flask import Flask, render_template
 import mysql.connector
 import os
 import time
-#test
+#test1
 app = Flask(__name__)
 
 def get_db_connection(retries=5, delay=3):
